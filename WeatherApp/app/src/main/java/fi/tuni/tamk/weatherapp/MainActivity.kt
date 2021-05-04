@@ -6,7 +6,11 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import java.net.HttpURLConnection
 import java.net.URL
+import org.apache.commons.io.IOUtils
+import java.nio.charset.StandardCharsets
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     lateinit var cityName: TextView
@@ -30,7 +34,24 @@ class MainActivity : AppCompatActivity() {
 
     fun clickedSearch(button: View) {
         Log.d("MainActivity", "Clicked search button")
+        getWeather(searchValue.text.toString())
         cityName.text = searchValue.text.toString()
         searchValue.text.clear()
+    }
+
+    fun getWeather(searchValue: String) {
+        Log.d("MainActivity", "Searching for $searchValue")
+        thread() {
+            var url: URL = createURL(searchValue)
+            val connection = url.openConnection() as HttpURLConnection
+            var result = ""
+            val inputStream = connection.inputStream
+
+            // use automatically closes the stream in every case
+            inputStream.use {
+                result =IOUtils.toString(it, StandardCharsets.UTF_8)
+            }
+            Log.d("${Thread.currentThread().name}", result)
+        }
     }
 }
