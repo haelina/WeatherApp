@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         cityName = findViewById(R.id.locationName)
         searchValue = findViewById(R.id.searchValue)
-        createURL("helsinki")
+        //createURL("helsinki")
     }
 
     fun clickedSearch(button: View) {
@@ -49,9 +49,9 @@ class MainActivity : AppCompatActivity() {
 
             // use automatically closes the stream in every case
             inputStream.use {
-                result =IOUtils.toString(it, StandardCharsets.UTF_8)
+                result = IOUtils.toString(it, StandardCharsets.UTF_8)
             }
-            Log.d("${Thread.currentThread().name}", result)
+            Log.d("MainActivity", result)
         }
     }
 }
