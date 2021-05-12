@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.commons.io.IOUtils
+import java.io.FileNotFoundException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.nio.charset.StandardCharsets
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var feelsLike: TextView
     lateinit var searchValue: EditText
     lateinit var weatherData: LinearLayout
+    lateinit var noResults: LinearLayout
     lateinit var currentWeather: WeatherDataObject
 
     // function for creating openweathermap url with desired location
@@ -47,9 +49,12 @@ class MainActivity : AppCompatActivity() {
         feelsLike = findViewById(R.id.feelsLike)
         searchValue = findViewById(R.id.searchValue)
         weatherData = findViewById(R.id.weatherData)
+        noResults = findViewById(R.id.notFound)
     }
 
     fun clickedSearch(button: View) {
+        noResults.visibility = View.GONE
+        weatherData.visibility = View.GONE
         Log.d("MainActivity", "Clicked search button")
         getWeather(searchValue.text.toString())
         cityName.text = searchValue.text.toString()
@@ -59,30 +64,36 @@ class MainActivity : AppCompatActivity() {
     fun getWeather(searchValue: String) {
         Log.d("MainActivity", "Searching for $searchValue")
         thread() {
-            var url: URL = createURL(searchValue)
-            val connection = url.openConnection() as HttpURLConnection
-            var result = ""
-            val inputStream = connection.inputStream
+            try {
+                var url: URL = createURL(searchValue)
+                val connection = url.openConnection() as HttpURLConnection
+                var result = ""
+                val inputStream = connection.inputStream
 
-            // 'use' automatically closes the stream in every case
-            inputStream.use {
-                result = IOUtils.toString(it, StandardCharsets.UTF_8)
-            }
-            if(result != "") {
-                currentWeather = parseWeatherData(result)
-            }
-            Log.d("MainActivity", result)
-            // update ui with runOnUiThread because we are not in main thread here
-            runOnUiThread() {
-                cityName.text = currentWeather.name
-                latitude.text = "latitude: " + currentWeather.getLatitude().toString()
-                longitude.text = "longitude " + currentWeather.getLongitude().toString()
-                val modifiedDescription = currentWeather.getDescription()?.substring(0, 1)?.toUpperCase() + currentWeather.getDescription()?.substring(1)
-                description.text = modifiedDescription
-                temperature.text = currentWeather.getTemperature().toString() + " \u2103"
-                minMaxTemp.text = "min: " + currentWeather.getMinTemperature().toString() + " ℃ \t\t\tmax: " + currentWeather.getMaxTemperature().toString() + " ℃"
-                feelsLike.text = "Feels like: " + currentWeather.getFeelsLikeTemperature().toString() + " ℃"
-                weatherData.visibility = View.VISIBLE
+                // 'use' automatically closes the stream in every case
+                inputStream.use {
+                    result = IOUtils.toString(it, StandardCharsets.UTF_8)
+                }
+                if(result != "") {
+                    currentWeather = parseWeatherData(result)
+                }
+                Log.d("MainActivity", result)
+                // update ui with runOnUiThread because we are not in main thread here
+                runOnUiThread() {
+                    cityName.text = currentWeather.name + ", " + currentWeather.getCountrycode()
+                    latitude.text = "latitude: " + currentWeather.getLatitude().toString()
+                    longitude.text = "longitude " + currentWeather.getLongitude().toString()
+                    val modifiedDescription = currentWeather.getDescription()?.substring(0, 1)?.toUpperCase() + currentWeather.getDescription()?.substring(1)
+                    description.text = modifiedDescription
+                    temperature.text = currentWeather.getTemperature().toString() + " \u2103"
+                    minMaxTemp.text = "min: " + currentWeather.getMinTemperature().toString() + " ℃ \t\t\tmax: " + currentWeather.getMaxTemperature().toString() + " ℃"
+                    feelsLike.text = "Feels like: " + currentWeather.getFeelsLikeTemperature().toString() + " ℃"
+                    weatherData.visibility = View.VISIBLE
+                }
+            } catch (e: FileNotFoundException) {
+                runOnUiThread() {
+                    noResults.visibility = View.VISIBLE
+                }
             }
         }
     }
