@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import java.net.HttpURLConnection
 import java.net.URL
@@ -15,11 +16,12 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity() {
     lateinit var cityName: TextView
     lateinit var searchValue: EditText
+    lateinit var weatherData: LinearLayout
 
     // function for creating openweathermap url with desired location
     fun createURL(locationName:String): URL {
         // Insert your own API key here!
-        var key = "yourApiKey"
+        var key = "c2ab16a9d28b8db7c07573179ae1e689"
         var base = "http://api.openweathermap.org/data/2.5/"
         var args = "weather?q=$locationName&units=metric&appid=$key"
         Log.d("MainActivity", "$base$args")
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         cityName = findViewById(R.id.locationName)
         searchValue = findViewById(R.id.searchValue)
+        weatherData = findViewById(R.id.weatherData)
         //createURL("helsinki")
     }
 
@@ -38,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         getWeather(searchValue.text.toString())
         cityName.text = searchValue.text.toString()
         searchValue.text.clear()
+
     }
 
     fun getWeather(searchValue: String) {
@@ -53,6 +57,10 @@ class MainActivity : AppCompatActivity() {
                 result = IOUtils.toString(it, StandardCharsets.UTF_8)
             }
             Log.d("MainActivity", result)
+            runOnUiThread() {
+                weatherData.visibility = View.VISIBLE
+            }
+
         }
     }
 }
