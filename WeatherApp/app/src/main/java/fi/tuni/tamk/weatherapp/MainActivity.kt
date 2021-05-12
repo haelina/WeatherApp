@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var cityName: TextView
     lateinit var searchValue: EditText
 
+    // function for creating openweathermap url with desired location
     fun createURL(locationName:String): URL {
         // Insert your own API key here!
         var key = "yourApiKey"
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             var result = ""
             val inputStream = connection.inputStream
 
-            // use automatically closes the stream in every case
+            // 'use' automatically closes the stream in every case
             inputStream.use {
                 result = IOUtils.toString(it, StandardCharsets.UTF_8)
             }
