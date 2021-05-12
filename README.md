@@ -15,6 +15,10 @@
 
 ## Release 1: 2021-05-12 features
 
+- User can search weather data with city or location name
+- Weather data shows up if results were found
+- If user types invalid search string the app informs that results are not found
+
 ## Release 2: 2021-05-21 features
 
 ## Known Bugs
