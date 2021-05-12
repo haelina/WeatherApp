@@ -7,19 +7,37 @@ class WeatherDataObject {
     val coord : Coordinate? = null
     val name: String? = null
     val main: MainWeatherData? = null
+    val weather: List<WeatherDescription>? = null
 
     fun getLatitude(): Double? {
         return coord?.lat
     }
+
     fun getLongitude(): Double? {
         return coord?.lon
     }
+
+    fun getDescription(): String? {
+        return weather?.get(0)?.description
+    }
+
     fun getTemperature(): Double? {
         return main?.temp
     }
 
+    fun getMinTemperature(): Double? {
+        return main?.temp_min
+    }
+    fun getMaxTemperature(): Double? {
+        return main?.temp_max
+    }
+
+    fun getFeelsLikeTemperature(): Double? {
+        return main?.feels_like
+    }
+
     override fun toString():String {
-        return name + coord.toString()
+        return name + " " + coord.toString()
     }
 }
 
@@ -36,5 +54,14 @@ class Coordinate {
 @JsonIgnoreProperties(ignoreUnknown = true)
 class MainWeatherData {
     var temp: Double? = null
-
+    var feels_like: Double? = null
+    var temp_min:Double? = null
+    var temp_max:Double? = null
 }
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class WeatherDescription {
+    var description: String? = null
+}
+
+
