@@ -1,24 +1,27 @@
 package fi.tuni.tamk.weatherapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.apache.commons.io.IOUtils
 import java.net.HttpURLConnection
 import java.net.URL
-import org.apache.commons.io.IOUtils
 import java.nio.charset.StandardCharsets
 import kotlin.concurrent.thread
-import com.fasterxml.jackson.databind.ObjectMapper
 
 class MainActivity : AppCompatActivity() {
     lateinit var cityName: TextView
     lateinit var latitude: TextView
     lateinit var longitude: TextView
+    lateinit var description: TextView
     lateinit var temperature: TextView
+    lateinit var minMaxTemp: TextView
+    lateinit var feelsLike: TextView
     lateinit var searchValue: EditText
     lateinit var weatherData: LinearLayout
     lateinit var currentWeather: WeatherDataObject
@@ -38,10 +41,12 @@ class MainActivity : AppCompatActivity() {
         cityName = findViewById(R.id.locationName)
         latitude = findViewById(R.id.latValue)
         longitude = findViewById(R.id.lonValue)
+        description = findViewById(R.id.description)
         temperature = findViewById(R.id.tempValue)
+        minMaxTemp = findViewById(R.id.minMaxTemp)
+        feelsLike = findViewById(R.id.feelsLike)
         searchValue = findViewById(R.id.searchValue)
         weatherData = findViewById(R.id.weatherData)
-        //createURL("helsinki")
     }
 
     fun clickedSearch(button: View) {
@@ -49,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         getWeather(searchValue.text.toString())
         cityName.text = searchValue.text.toString()
         searchValue.text.clear()
-
     }
 
     fun getWeather(searchValue: String) {
@@ -68,12 +72,16 @@ class MainActivity : AppCompatActivity() {
                 currentWeather = parseWeatherData(result)
             }
             Log.d("MainActivity", result)
-            //
+            // update ui with runOnUiThread because we are not in main thread here
             runOnUiThread() {
                 cityName.text = currentWeather.name
-                latitude.text = currentWeather.getLatitude().toString()
-                longitude.text = currentWeather.getLongitude().toString()
+                latitude.text = "latitude: " + currentWeather.getLatitude().toString()
+                longitude.text = "longitude " + currentWeather.getLongitude().toString()
+                val modifiedDescription = currentWeather.getDescription()?.substring(0, 1)?.toUpperCase() + currentWeather.getDescription()?.substring(1)
+                description.text = modifiedDescription
                 temperature.text = currentWeather.getTemperature().toString() + " \u2103"
+                minMaxTemp.text = "min: " + currentWeather.getMinTemperature().toString() + " ℃ \t\t\tmax: " + currentWeather.getMaxTemperature().toString() + " ℃"
+                feelsLike.text = "Feels like: " + currentWeather.getFeelsLikeTemperature().toString() + " ℃"
                 weatherData.visibility = View.VISIBLE
             }
         }
