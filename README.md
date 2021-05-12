@@ -1,7 +1,9 @@
 # WeatherApp
+
 **Name:** Hanna Sepänmaa
 
 **Topic:** Mobile application that shows current weather using the [OpenWeatherMap API](https://openweathermap.org/api).
+
 - If user gives permission location coordinates are used to fetch weather data.
 - User can search weather data by city name.
 - (Possibility) The app can show another city's weather by random to compare weather conditions.
@@ -10,3 +12,9 @@
 **Target:** Android/Kotlin
 
 **Google Play link:** -
+
+## Release 1: 2021-05-12 features
+
+## Release 2: 2021-05-21 features
+
+## Known Bugs
