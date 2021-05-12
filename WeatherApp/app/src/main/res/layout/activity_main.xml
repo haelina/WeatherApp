@@ -41,15 +41,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/shape"
-        >
+        android:background="@drawable/shape">
     <TextView
         android:id="@+id/locationName"
         android:layout_marginTop="10dp"
-        android:textSize="24dp"
+        android:textSize="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cityname"
+        android:text="Cityname, countrycode"
         android:textAlignment="center" />
         <TextView
             android:id="@+id/latValue"
@@ -72,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Description here"
-            android:textSize="20dp"
+            android:textSize="24dp"
             android:textAlignment="center"/>
         <TextView
             android:layout_marginTop="20dp"
@@ -90,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Feels like: 26 \u2103"
-            android:textSize="24dp"
+            android:textSize="18dp"
             android:textAlignment="center"/>
         <TextView
             android:layout_width="match_parent"
@@ -101,5 +100,21 @@
             android:textAlignment="center"
             android:layout_marginBottom="30dp"/>
     </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/notFound"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/shape">
+        <TextView
+            android:id="@+id/notFoundText"
+            android:textSize="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No results found.\nTry again!"
+            android:textAlignment="center" />
+    </LinearLayout>
 </LinearLayout>
