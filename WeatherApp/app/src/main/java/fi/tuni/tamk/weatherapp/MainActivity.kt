@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                 result = IOUtils.toString(it, StandardCharsets.UTF_8)
             }
             Log.d("MainActivity", result)
+            //
             runOnUiThread() {
                 weatherData.visibility = View.VISIBLE
             }
