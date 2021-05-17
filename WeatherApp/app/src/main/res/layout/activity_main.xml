@@ -50,20 +50,22 @@
                     android:text="Search with current location"
                     android:textStyle="bold"
                     android:textSize="24dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/latitude"
-                    android:text="Latitude: xx"
+                    android:text="Latitude: 0.0"
                     android:textAlignment="center"
                     android:textSize="18dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/longitude"
-                    android:text="Longitude: xx"
+                    android:text="Longitude: 0.0"
                     android:textAlignment="center"
                     android:textSize="18dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <Button
@@ -71,7 +73,14 @@
                     android:text="Get coordinates"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="clickGetCoordinates"/>
+                    android:onClick="getCoordinates"/>
+                <Button
+                    android:id="@+id/searchWithCoordinates"
+                    android:text="Search weather"
+                    android:enabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="clickSearchCoordinates"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/weatherData"
