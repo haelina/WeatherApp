@@ -73,5 +73,3 @@ class WeatherDescription {
 class CountryInfo {
     var country: String? = null
 }
-
-
