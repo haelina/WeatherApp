@@ -1,5 +1,6 @@
 package fi.tuni.tamk.weatherapp
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,9 +14,34 @@ import java.io.FileNotFoundException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.nio.charset.StandardCharsets
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.gms.tasks.Task
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
+    // city name or location name used in getting weather data
+    lateinit var searchValue: EditText
+
+    // latitude and longitude used on gettin weather data
+    lateinit var latSearch: TextView
+    lateinit var lonSearch: TextView
+
+    // linear layout showing weather results
+    lateinit var weatherData: LinearLayout
+    // linear layout shown when result was not found
+    lateinit var noResults: LinearLayout
+
+    // actual data fields containing weather details
     lateinit var cityName: TextView
     lateinit var latitude: TextView
     lateinit var longitude: TextView
@@ -23,20 +49,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var temperature: TextView
     lateinit var minMaxTemp: TextView
     lateinit var feelsLike: TextView
-    lateinit var searchValue: EditText
-    lateinit var weatherData: LinearLayout
-    lateinit var noResults: LinearLayout
+
+    // weather data turned into object
     lateinit var currentWeather: WeatherDataObject
 
-    // function for creating openweathermap url with desired location
-    fun createURL(locationName:String): URL {
-        // get api key from config.js
-        var key = getApiKey()
-        var base = "http://api.openweathermap.org/data/2.5/"
-        var args = "weather?q=$locationName&units=metric&appid=$key"
-        Log.d("MainActivity", "$base$args")
-        return URL(base + args)
-    }
+    // variables needed for getting current location
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var cancellationTokenSource = CancellationTokenSource()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -48,8 +68,27 @@ class MainActivity : AppCompatActivity() {
         minMaxTemp = findViewById(R.id.minMaxTemp)
         feelsLike = findViewById(R.id.feelsLike)
         searchValue = findViewById(R.id.searchValue)
+        latSearch = findViewById(R.id.latitude)
+        lonSearch = findViewById(R.id.longitude)
         weatherData = findViewById(R.id.weatherData)
         noResults = findViewById(R.id.notFound)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // Cancels possible location request
+        cancellationTokenSource.cancel()
+    }
+
+    // function for creating openweathermap url with desired location
+    fun createURL(locationName:String): URL {
+        // get api key from config.js
+        var key = getApiKey()
+        var base = "http://api.openweathermap.org/data/2.5/"
+        var args = "weather?q=$locationName&units=metric&appid=$key"
+        Log.d("MainActivity", "$base$args")
+        return URL(base + args)
     }
 
     fun clickedSearch(button: View) {
@@ -78,6 +117,7 @@ class MainActivity : AppCompatActivity() {
                     currentWeather = parseWeatherData(result)
                 }
                 Log.d("MainActivity", result)
+
                 // update ui with runOnUiThread because we are not in main thread here
                 runOnUiThread() {
                     cityName.text = currentWeather.name + ", " + currentWeather.getCountrycode()
@@ -104,5 +144,65 @@ class MainActivity : AppCompatActivity() {
         val dataObj:WeatherDataObject = mp.readValue(data, WeatherDataObject::class.java)
         Log.d("MainActivity", dataObj.toString())
         return dataObj
+    }
+
+    fun clickGetCoordinates(button: View) {
+        getCoordinates()
+    }
+
+    fun checkPermissions():Boolean {
+        Log.d("MainActivity", "Checking permissions")
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // You can use the API that requires the permission.
+            Log.d("MainActivity", "Permissions granted and action can be done")
+            return true
+        }
+        return false
+    }
+
+    fun requesPermissions() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 100)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if(requestCode == 100) {
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //checkPermissions()
+                Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun getCoordinates() {
+        Log.d("MainActivity", "Finding coordinates")
+        if(checkPermissions()) {
+            if(isLocationEnabled()) {
+                val currentLocTask: Task<Location> = fusedLocationProviderClient.getCurrentLocation(
+                    PRIORITY_HIGH_ACCURACY, cancellationTokenSource.token)
+                currentLocTask.addOnCompleteListener {
+                    if (it.isSuccessful && it.result != null) {
+                        val location: Location = it.result
+                        Log.d("MainActivity", "thread is ${Thread.currentThread().name}")
+                        Log.d("MainActivity", "lat:${location.latitude} lon:${location.longitude}")
+                        latSearch.text = "Latitude: ${location.latitude}"
+                        lonSearch.text = "Longitude: ${location.longitude}"
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Location is not enabled", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            requesPermissions()
+        }
+    }
+
+    fun isLocationEnabled(): Boolean {
+        var locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 }
