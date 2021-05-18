@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.commons.io.IOUtils
 import java.io.FileNotFoundException
 import java.net.HttpURLConnection
@@ -29,13 +28,6 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity() {
     // city name or location name used in getting weather data
     lateinit var searchValue: EditText
-
-    // latitude and longitude used on gettin weather data
-    lateinit var latSearch: TextView
-    lateinit var lonSearch: TextView
-    var lat = "0.0"
-    var lon = "0.0"
-    lateinit var searchWithCoordinatesButton: Button
 
     // linear layout showing weather results
     lateinit var weatherData: LinearLayout
@@ -64,10 +56,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         searchValue = findViewById(R.id.searchValue)
-
-        //latSearch = findViewById(R.id.latitude)
-        //lonSearch = findViewById(R.id.longitude)
-        //searchWithCoordinatesButton = findViewById(R.id.searchWithCoordinates)
 
         weatherData = findViewById(R.id.weatherData)
         noResults = findViewById(R.id.notFound)
@@ -144,10 +132,6 @@ class MainActivity : AppCompatActivity() {
         weatherData.visibility = View.VISIBLE
     }
 
-    fun clickSearchCoordinates(button: View) {
-        getWeatherWithCoordinates(lat, lon)
-    }
-
     fun getWeatherWithCoordinates(lat: String, lon: String) {
         Log.d("MainActivity", "Searching for $searchValue")
         thread() {
@@ -215,12 +199,9 @@ class MainActivity : AppCompatActivity() {
                         val location: Location = it.result
                         Log.d("MainActivity", "thread is ${Thread.currentThread().name}")
                         Log.d("MainActivity", "lat:${location.latitude} lon:${location.longitude}")
-                        //latSearch.text = "Latitude: ${location.latitude}"
-                        //lonSearch.text = "Longitude: ${location.longitude}"
-                        lat = location.latitude.toString()
-                        lon = location.longitude.toString()
-                        //searchWithCoordinatesButton.isEnabled = true
-                        getWeatherWithCoordinates(lat, lon)
+                        noResults.visibility = View.GONE
+                        weatherData.visibility = View.GONE
+                        getWeatherWithCoordinates(location.latitude.toString(), location.longitude.toString())
                     }
                 }
             } else {
