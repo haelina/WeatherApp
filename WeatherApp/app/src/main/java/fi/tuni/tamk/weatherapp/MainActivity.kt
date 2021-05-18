@@ -23,6 +23,8 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.Task
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
@@ -42,7 +44,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var temperature: TextView
     lateinit var minMaxTemp: TextView
     lateinit var feelsLike: TextView
+    lateinit var sunriseTime: TextView
+    lateinit var sunsetTime: TextView
     lateinit var weatherIcon: ImageView
+    lateinit var dateTime: TextView
 
     // weather data turned into object
     lateinit var currentWeather: WeatherDataObject
@@ -68,6 +73,9 @@ class MainActivity : AppCompatActivity() {
         minMaxTemp = findViewById(R.id.minMaxTemp)
         feelsLike = findViewById(R.id.feelsLike)
         weatherIcon = findViewById(R.id.weatherIcon)
+        sunriseTime = findViewById(R.id.sunrise)
+        sunsetTime = findViewById(R.id.sunset)
+        dateTime = findViewById(R.id.dateTime)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -123,13 +131,38 @@ class MainActivity : AppCompatActivity() {
         cityName.text = currentWeather.name + ", " + currentWeather.getCountrycode()
         latitude.text = "latitude: " + currentWeather.getLatitude().toString()
         longitude.text = "longitude " + currentWeather.getLongitude().toString()
-        val modifiedDescription = currentWeather.getDescription()?.substring(0, 1)?.toUpperCase() + currentWeather.getDescription()?.substring(1)
-        description.text = modifiedDescription
+        description.text = currentWeather.getDescription()?.substring(0, 1)?.toUpperCase() + currentWeather.getDescription()?.substring(1)
         temperature.text = currentWeather.getTemperature().toString() + " \u2103"
         minMaxTemp.text = "min: " + currentWeather.getMinTemperature().toString() + " ℃ \t\t\tmax: " + currentWeather.getMaxTemperature().toString() + " ℃"
         feelsLike.text = "Feels like: " + currentWeather.getFeelsLikeTemperature().toString() + " ℃"
+        val current = currentWeather.dt
+        val timezone = currentWeather.timezone
+        if (current != null && timezone != null) {
+            val localCurrent = current +  timezone - 10800
+            dateTime.text = "${getDateTimeFormatted(Date(localCurrent * 1000L))}"
+        }
+        val sunrise = currentWeather.getSunriseTime()?.toLong()
+        val sunset = currentWeather.getSunsetTime()?.toLong()
+        if(sunrise != null && sunset != null && timezone != null) {
+            val sunriseDate = Date((sunrise + timezone - 10800) * 1000L)
+            val sunsetDate = Date((sunset + timezone - 10800)* 1000L)
+            sunriseTime.text = "sunrise: ${getTimeFormatted(sunriseDate)}"
+            sunsetTime.text = "sunset: ${getTimeFormatted(sunsetDate)}"
+        }
         Picasso.get().load("http://openweathermap.org/img/wn/${currentWeather.getIconCode()}@2x.png").resize(350, 350).into(weatherIcon);
         weatherData.visibility = View.VISIBLE
+    }
+
+    fun getDateTimeFormatted(date:Date):String {
+        var simpleDateFormat = SimpleDateFormat("dd.MM.yyy\nHH:mm:ss")
+        val formatted = simpleDateFormat.format(date)
+        return formatted
+    }
+
+    fun getTimeFormatted(date:Date):String {
+        var simpleDateFormat = SimpleDateFormat("HH:mm:ss")
+        val formatted = simpleDateFormat.format(date)
+        return formatted
     }
 
     fun getWeatherWithCoordinates(lat: String, lon: String) {
