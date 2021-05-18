@@ -45,16 +45,17 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape"
                 android:layout_marginTop="10dp"
                 android:layout_marginHorizontal="20dp">
+                <!--android:background="@drawable/shape"
                 <TextView
                     android:text="Search with current location"
                     android:textStyle="bold"
                     android:textSize="24dp"
                     android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content" />                android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="20dp">
                 <TextView
                     android:id="@+id/latitude"
                     android:text="Latitude: 0.0"
@@ -69,24 +70,24 @@
                     android:textSize="18dp"
                     android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content" />-->
                 <Button
                     android:id="@+id/getCoordinatesButton"
-                    android:text="Get coordinates"
+                    android:text="Current location weather"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="getCoordinates"/>
-                <Button
+                <!--<Button
                     android:id="@+id/searchWithCoordinates"
                     android:text="Search weather"
                     android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="clickSearchCoordinates"/>
+                    android:onClick="clickSearchCoordinates"/>-->
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/weatherData"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
