@@ -23,6 +23,7 @@ import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.Task
+import com.squareup.picasso.Picasso
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var temperature: TextView
     lateinit var minMaxTemp: TextView
     lateinit var feelsLike: TextView
+    lateinit var weatherIcon: ImageView
 
     // weather data turned into object
     lateinit var currentWeather: WeatherDataObject
@@ -77,8 +79,11 @@ class MainActivity : AppCompatActivity() {
         temperature = findViewById(R.id.tempValue)
         minMaxTemp = findViewById(R.id.minMaxTemp)
         feelsLike = findViewById(R.id.feelsLike)
+        weatherIcon = findViewById(R.id.weatherIcon)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+        getWeather("tampere")
     }
 
     override fun onStop() {
@@ -116,15 +121,7 @@ class MainActivity : AppCompatActivity() {
 
                 // update ui with runOnUiThread because we are not in main thread here
                 runOnUiThread() {
-                    cityName.text = currentWeather.name + ", " + currentWeather.getCountrycode()
-                    latitude.text = "latitude: " + currentWeather.getLatitude().toString()
-                    longitude.text = "longitude " + currentWeather.getLongitude().toString()
-                    val modifiedDescription = currentWeather.getDescription()?.substring(0, 1)?.toUpperCase() + currentWeather.getDescription()?.substring(1)
-                    description.text = modifiedDescription
-                    temperature.text = currentWeather.getTemperature().toString() + " \u2103"
-                    minMaxTemp.text = "min: " + currentWeather.getMinTemperature().toString() + " ℃ \t\t\tmax: " + currentWeather.getMaxTemperature().toString() + " ℃"
-                    feelsLike.text = "Feels like: " + currentWeather.getFeelsLikeTemperature().toString() + " ℃"
-                    weatherData.visibility = View.VISIBLE
+                    updateUi()
                 }
             } catch (e: FileNotFoundException) {
                 runOnUiThread() {
@@ -132,6 +129,19 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun updateUi() {
+        cityName.text = currentWeather.name + ", " + currentWeather.getCountrycode()
+        latitude.text = "latitude: " + currentWeather.getLatitude().toString()
+        longitude.text = "longitude " + currentWeather.getLongitude().toString()
+        val modifiedDescription = currentWeather.getDescription()?.substring(0, 1)?.toUpperCase() + currentWeather.getDescription()?.substring(1)
+        description.text = modifiedDescription
+        temperature.text = currentWeather.getTemperature().toString() + " \u2103"
+        minMaxTemp.text = "min: " + currentWeather.getMinTemperature().toString() + " ℃ \t\t\tmax: " + currentWeather.getMaxTemperature().toString() + " ℃"
+        feelsLike.text = "Feels like: " + currentWeather.getFeelsLikeTemperature().toString() + " ℃"
+        Picasso.get().load("http://openweathermap.org/img/wn/${currentWeather.getIconCode()}@2x.png").resize(350, 350).into(weatherIcon);
+        weatherData.visibility = View.VISIBLE
     }
 
     fun clickSearchCoordinates(button: View) {
@@ -158,15 +168,7 @@ class MainActivity : AppCompatActivity() {
 
                 // update ui with runOnUiThread because we are not in main thread here
                 runOnUiThread() {
-                    cityName.text = currentWeather.name + ", " + currentWeather.getCountrycode()
-                    latitude.text = "latitude: " + currentWeather.getLatitude().toString()
-                    longitude.text = "longitude " + currentWeather.getLongitude().toString()
-                    val modifiedDescription = currentWeather.getDescription()?.substring(0, 1)?.toUpperCase() + currentWeather.getDescription()?.substring(1)
-                    description.text = modifiedDescription
-                    temperature.text = currentWeather.getTemperature().toString() + " \u2103"
-                    minMaxTemp.text = "min: " + currentWeather.getMinTemperature().toString() + " ℃ \t\t\tmax: " + currentWeather.getMaxTemperature().toString() + " ℃"
-                    feelsLike.text = "Feels like: " + currentWeather.getFeelsLikeTemperature().toString() + " ℃"
-                    weatherData.visibility = View.VISIBLE
+                    updateUi()
                 }
             } catch (e: FileNotFoundException) {
                 runOnUiThread() {
