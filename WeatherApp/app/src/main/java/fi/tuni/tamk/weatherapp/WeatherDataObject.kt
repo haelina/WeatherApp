@@ -9,6 +9,8 @@ class WeatherDataObject {
     val main: MainWeatherData? = null
     val weather: List<WeatherDescription>? = null
     val sys: CountryInfo? = null
+    val dt: Long? = null
+    val timezone: Long? = null
 
     fun getLatitude(): Double? {
         return coord?.lat
@@ -20,6 +22,14 @@ class WeatherDataObject {
 
     fun getCountrycode(): String? {
         return sys?.country
+    }
+
+    fun getSunriseTime(): Int? {
+        return sys?.sunrise
+    }
+
+    fun getSunsetTime(): Int? {
+        return sys?.sunset
     }
 
     fun getDescription(): String? {
@@ -77,4 +87,6 @@ class WeatherDescription {
 @JsonIgnoreProperties(ignoreUnknown = true)
 class CountryInfo {
     var country: String? = null
+    var sunrise:Int? = null
+    var sunset:Int? = null
 }
