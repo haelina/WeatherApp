@@ -74,6 +74,14 @@
                 android:text="Cityname, countrycode"
                 android:textAlignment="center" />
                 <TextView
+                    android:id="@+id/dateTime"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="datetime: xxx"
+                    android:textSize="18dp"
+                    android:textAlignment="center" />
+                <TextView
                     android:id="@+id/latValue"
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
@@ -124,6 +132,22 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/minMaxTemp"
                     android:text="min: 10 \u2103 \t\t\tmax: 30 \u2103"
+                    android:textSize="12dp"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sunrise"
+                    android:text="sunrise: "
+                    android:textSize="12dp"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="5dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sunset"
+                    android:text="sunset: "
                     android:textSize="12dp"
                     android:textAlignment="center"
                     android:layout_marginBottom="30dp"/>
