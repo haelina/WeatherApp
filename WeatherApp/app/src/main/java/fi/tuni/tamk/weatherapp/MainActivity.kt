@@ -65,9 +65,9 @@ class MainActivity : AppCompatActivity() {
 
         searchValue = findViewById(R.id.searchValue)
 
-        latSearch = findViewById(R.id.latitude)
-        lonSearch = findViewById(R.id.longitude)
-        searchWithCoordinatesButton = findViewById(R.id.searchWithCoordinates)
+        //latSearch = findViewById(R.id.latitude)
+        //lonSearch = findViewById(R.id.longitude)
+        //searchWithCoordinatesButton = findViewById(R.id.searchWithCoordinates)
 
         weatherData = findViewById(R.id.weatherData)
         noResults = findViewById(R.id.notFound)
@@ -215,11 +215,12 @@ class MainActivity : AppCompatActivity() {
                         val location: Location = it.result
                         Log.d("MainActivity", "thread is ${Thread.currentThread().name}")
                         Log.d("MainActivity", "lat:${location.latitude} lon:${location.longitude}")
-                        latSearch.text = "Latitude: ${location.latitude}"
-                        lonSearch.text = "Longitude: ${location.longitude}"
+                        //latSearch.text = "Latitude: ${location.latitude}"
+                        //lonSearch.text = "Longitude: ${location.longitude}"
                         lat = location.latitude.toString()
                         lon = location.longitude.toString()
-                        searchWithCoordinatesButton.isEnabled = true
+                        //searchWithCoordinatesButton.isEnabled = true
+                        getWeatherWithCoordinates(lat, lon)
                     }
                 }
             } else {
