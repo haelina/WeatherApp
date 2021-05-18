@@ -26,6 +26,10 @@ class WeatherDataObject {
         return weather?.get(0)?.description
     }
 
+    fun getIconCode(): String? {
+        return weather?.get(0)?.icon
+    }
+
     fun getTemperature(): Double? {
         return main?.temp
     }
@@ -67,6 +71,7 @@ class MainWeatherData {
 @JsonIgnoreProperties(ignoreUnknown = true)
 class WeatherDescription {
     var description: String? = null
+    var icon:String? = null
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
