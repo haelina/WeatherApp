@@ -19,27 +19,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginHorizontal="20dp">
-                <!--android:background="@drawable/shape"-->
-
-            <!--<TextView
-                android:text="Search for weather by city name"
-                android:textStyle="bold"
-                android:textSize="24dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />-->
-            <EditText
-                android:id="@+id/searchValue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter city or location name"
-                android:layout_toLeftOf="@+id/searchButton"/>
-            <Button
-                android:id="@+id/searchButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Search"
-                android:layout_alignParentRight="true"
-                android:onClick="clickedSearch"/>
+                <EditText
+                    android:id="@+id/searchValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter city or location name"
+                    android:layout_toLeftOf="@+id/searchButton"/>
+                <Button
+                    android:id="@+id/searchButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search"
+                    android:layout_alignParentRight="true"
+                    android:onClick="clickedSearch"/>
             </RelativeLayout>
             <LinearLayout
                 android:orientation="vertical"
@@ -47,52 +39,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginHorizontal="20dp">
-                <!--android:background="@drawable/shape"
-                <TextView
-                    android:text="Search with current location"
-                    android:textStyle="bold"
-                    android:textSize="24dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />                android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="20dp">
-                <TextView
-                    android:id="@+id/latitude"
-                    android:text="Latitude: 0.0"
-                    android:textAlignment="center"
-                    android:textSize="18dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/longitude"
-                    android:text="Longitude: 0.0"
-                    android:textAlignment="center"
-                    android:textSize="18dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />-->
                 <Button
                     android:id="@+id/getCoordinatesButton"
                     android:text="Current location weather"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="getCoordinates"/>
-                <!--<Button
-                    android:id="@+id/searchWithCoordinates"
-                    android:text="Search weather"
-                    android:enabled="false"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="clickSearchCoordinates"/>-->
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/weatherData"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="100dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/shape">
             <TextView
