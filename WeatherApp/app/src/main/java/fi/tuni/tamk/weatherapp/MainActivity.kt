@@ -17,6 +17,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     // linear layout showing weather results
     lateinit var weatherData: LinearLayout
+    lateinit var forecastData: LinearLayout
     // linear layout shown when result was not found
     lateinit var noResults: LinearLayout
 
@@ -51,11 +53,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var weatherIcon: ImageView
     lateinit var dateTime: TextView
 
+    // recyclerview for handling forecast items
     lateinit var recycler_view: RecyclerView
 
-    // weather data turned into object
+    // weather data and forecast data turned into object
     lateinit var currentWeather: WeatherDataObject
-
     lateinit var currentForecast: WeatherForecastObject
 
     // variables needed for getting current location
@@ -69,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         searchValue = findViewById(R.id.searchValue)
 
         weatherData = findViewById(R.id.weatherData)
+        forecastData = findViewById(R.id.forecastData)
         noResults = findViewById(R.id.notFound)
 
         cityName = findViewById(R.id.locationName)
@@ -105,6 +108,16 @@ class MainActivity : AppCompatActivity() {
         getWeather(searchValue.text.toString())
         cityName.text = searchValue.text.toString()
         searchValue.text.clear()
+    }
+
+    fun showWeather(button: View) {
+        forecastData.isVisible = false
+        weatherData.isVisible = true
+    }
+
+    fun showForecast(button: View) {
+        forecastData.isVisible = true
+        weatherData.isVisible = false
     }
 
     fun getWeather(searchValue: String) {
