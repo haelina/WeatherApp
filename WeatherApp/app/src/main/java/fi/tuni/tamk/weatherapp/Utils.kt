@@ -10,3 +10,11 @@ fun parseWeatherData(data:String): WeatherDataObject {
     Log.d("MainActivity", dataObj.toString())
     return dataObj
 }
+
+fun parseForecastData(data:String): WeatherForecastObject {
+    Log.d("MainActivity", " data before parsing " + data)
+    val mp = ObjectMapper()
+    val dataObj:WeatherForecastObject = mp.readValue(data, WeatherForecastObject::class.java)
+    Log.d("MainActivity", dataObj.toString())
+    return dataObj
+}
