@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getDateTimeFormatted(date:Date):String {
-        var simpleDateFormat = SimpleDateFormat("dd.MM.yyy\nHH:mm:ss")
+        var simpleDateFormat = SimpleDateFormat("dd.MM.yyy HH:mm:ss")
         val formatted = simpleDateFormat.format(date)
         return formatted
     }
