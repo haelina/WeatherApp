@@ -17,6 +17,8 @@ import android.location.Location
 import android.location.LocationManager
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.location.LocationServices
@@ -49,8 +51,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var weatherIcon: ImageView
     lateinit var dateTime: TextView
 
+    lateinit var recycler_view: RecyclerView
+
     // weather data turned into object
     lateinit var currentWeather: WeatherDataObject
+
+    lateinit var currentForecast: WeatherForecastObject
 
     // variables needed for getting current location
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -77,9 +83,13 @@ class MainActivity : AppCompatActivity() {
         sunsetTime = findViewById(R.id.sunset)
         dateTime = findViewById(R.id.dateTime)
 
+        recycler_view = findViewById(R.id.recycler_view)
+        recycler_view.layoutManager = LinearLayoutManager(this)
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         getWeather("tampere")
+        getForecast("tampere")
     }
 
     override fun onStop() {
@@ -187,6 +197,39 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread() {
                     updateUi()
                 }
+            } catch (e: FileNotFoundException) {
+                runOnUiThread() {
+                    noResults.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
+    fun getForecast(searchValue: String) {
+        Log.d("MainActivity", "Searching forecast with $searchValue")
+        thread() {
+            try {
+                var url: URL = getForecastUrl(searchValue)
+                val connection = url.openConnection() as HttpURLConnection
+                var result = ""
+                val inputStream = connection.inputStream
+
+                // 'use' automatically closes the stream in every case
+                inputStream.use {
+                    result = IOUtils.toString(it, StandardCharsets.UTF_8)
+                }
+                if(result != "") {
+                    currentForecast = parseForecastData(result)
+                }
+                Log.d("MainActivity", result)
+
+                // update ui with runOnUiThread because we are not in main thread here
+                runOnUiThread() {
+                    if(currentForecast.list != null) {
+                        recycler_view.adapter = ForecastAdapter(currentForecast.list!!)
+                    }
+                }
+
             } catch (e: FileNotFoundException) {
                 runOnUiThread() {
                     noResults.visibility = View.VISIBLE
