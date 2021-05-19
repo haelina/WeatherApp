@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:background="@drawable/background">
-    <!--android:background="@color/white">-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -55,16 +54,39 @@
                         android:onClick="getCoordinates"/>
                 </LinearLayout>
             </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/navButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp"
+                android:visibility="visible"
+                android:layout_marginTop="10dp">
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/weatherButton"
+                    android:text="Current weather"
+                    android:insetBottom="0dp"
+                    android:onClick="showWeather"/>
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/forecastButton"
+                    android:text="5 day Forecast"
+                    android:layout_alignParentRight="true"
+                    android:insetBottom="0dp"
+                    android:onClick="showForecast"/>
+            </RelativeLayout>
             <LinearLayout
                 android:id="@+id/forecastData"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/shape"
-                android:alpha="0.94">
+                android:alpha="0.94"
+                android:layout_marginBottom="30dp">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
@@ -76,18 +98,18 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/shape"
-                android:alpha="0.94">
-            <TextView
-                android:id="@+id/locationName"
-                android:layout_marginTop="10dp"
-                android:textSize="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cityname, countrycode"
-                android:textAlignment="center" />
+                android:alpha="0.94"
+                android:layout_marginBottom="30dp">
+                <TextView
+                    android:id="@+id/locationName"
+                    android:layout_marginTop="10dp"
+                    android:textSize="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cityname, countrycode"
+                    android:textAlignment="center" />
                 <TextView
                     android:id="@+id/dateTime"
                     android:layout_marginTop="20dp"
@@ -171,9 +193,9 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginHorizontal="20dp"
-                android:background="@drawable/shape">
+                android:background="@drawable/shape"
+                android:layout_marginBottom="30dp">
                 <TextView
                     android:id="@+id/notFoundText"
                     android:textSize="24dp"
