@@ -67,7 +67,8 @@
                     android:id="@+id/weatherButton"
                     android:text="Current weather"
                     android:insetBottom="0dp"
-                    android:onClick="showWeather"/>
+                    android:onClick="showWeather"
+                    android:background="@drawable/navbutton" />
                 <Button
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
@@ -75,7 +76,8 @@
                     android:text="5 day Forecast"
                     android:layout_alignParentRight="true"
                     android:insetBottom="0dp"
-                    android:onClick="showForecast"/>
+                    android:onClick="showForecast"
+                    android:background="@drawable/navbutton" />
             </RelativeLayout>
             <LinearLayout
                 android:id="@+id/forecastData"
