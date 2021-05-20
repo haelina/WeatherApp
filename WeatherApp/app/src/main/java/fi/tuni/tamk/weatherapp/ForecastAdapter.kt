@@ -31,9 +31,9 @@ class ForecastAdapter(val items: ArrayList<Forecast3h>): RecyclerView.Adapter<Fo
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val forecastItem = items[position]
-        Picasso.get().load("http://openweathermap.org/img/wn/${forecastItem.weather?.get(0)?.icon}@2x.png").resize(150, 150).into(holder.forecastIcon);
+        Picasso.get().load("http://openweathermap.org/img/wn/${forecastItem.weather?.get(0)?.icon}@2x.png").resize(180, 180).into(holder.forecastIcon);
 
         holder.time.text = "${forecastItem.dt_txt}"
-        holder.temperature.text = "temp ${forecastItem.main?.temp} ℃"
+        holder.temperature.text = "${forecastItem.main?.temp} ℃"
     }
 }
