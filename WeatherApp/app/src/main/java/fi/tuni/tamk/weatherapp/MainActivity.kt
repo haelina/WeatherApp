@@ -194,8 +194,6 @@ class MainActivity : AppCompatActivity() {
         weatherData.isVisible = true
     }
 
-
-
     fun getWeatherWithCoordinates(lat: String, lon: String) {
         thread() {
             try {
@@ -247,8 +245,8 @@ class MainActivity : AppCompatActivity() {
 
                 // update ui with runOnUiThread because we are not in main thread here
                 runOnUiThread() {
-                    if(currentForecast.list != null) {
-                        recycler_view.adapter = ForecastAdapter(currentForecast.list!!)
+                    if(currentForecast.list != null && currentWeather.timezone != null) {
+                        recycler_view.adapter = ForecastAdapter(currentForecast.list!!, currentWeather.timezone!!)
                         weatherButton.isEnabled = true
                         forecastButton.isEnabled = true
                     }
@@ -282,8 +280,8 @@ class MainActivity : AppCompatActivity() {
 
                 // update ui with runOnUiThread because we are not in main thread here
                 runOnUiThread() {
-                    if(currentForecast.list != null) {
-                        recycler_view.adapter = ForecastAdapter(currentForecast.list!!)
+                    if(currentForecast.list != null && currentWeather.timezone != null) {
+                        recycler_view.adapter = ForecastAdapter(currentForecast.list!!, currentWeather.timezone!!)
                         weatherButton.isEnabled = true
                         forecastButton.isEnabled = true
                     }
