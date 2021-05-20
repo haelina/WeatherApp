@@ -22,7 +22,13 @@ fun parseForecastData(data:String): WeatherForecastObject {
 }
 
 fun getDateTimeFormatted(date: Date):String {
-    var simpleDateFormat = SimpleDateFormat("dd.MM.yyy HH:mm:ss")
+    var simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
+    val formatted = simpleDateFormat.format(date)
+    return formatted
+}
+
+fun getForecastDateFormatted(date: Date):String {
+    var simpleDateFormat = SimpleDateFormat("dd.MM.yy HH:mm")
     val formatted = simpleDateFormat.format(date)
     return formatted
 }
