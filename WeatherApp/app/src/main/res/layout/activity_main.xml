@@ -84,8 +84,7 @@
                 android:visibility="gone"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="500dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/shape"
                 android:alpha="0.94"
@@ -102,7 +101,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="10dp"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/weatherData"
@@ -250,17 +250,16 @@
                 android:visibility="gone"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="500dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/shape"
                 android:layout_marginBottom="30dp">
                 <TextView
                     android:id="@+id/notFoundText"
+                    android:paddingTop="100dp"
                     android:textSize="24dp"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:text="No results found.\nTry again!"
                     android:textAlignment="center" />
             </LinearLayout>
