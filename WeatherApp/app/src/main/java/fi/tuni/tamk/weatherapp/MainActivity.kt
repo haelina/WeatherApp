@@ -26,7 +26,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.Task
 import com.squareup.picasso.Picasso
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -195,17 +194,7 @@ class MainActivity : AppCompatActivity() {
         weatherData.isVisible = true
     }
 
-    fun getDateTimeFormatted(date:Date):String {
-        var simpleDateFormat = SimpleDateFormat("dd.MM.yyy HH:mm:ss")
-        val formatted = simpleDateFormat.format(date)
-        return formatted
-    }
 
-    fun getTimeFormatted(date:Date):String {
-        var simpleDateFormat = SimpleDateFormat("HH:mm:ss")
-        val formatted = simpleDateFormat.format(date)
-        return formatted
-    }
 
     fun getWeatherWithCoordinates(lat: String, lon: String) {
         thread() {
