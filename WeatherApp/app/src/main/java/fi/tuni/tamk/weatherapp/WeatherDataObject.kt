@@ -1,6 +1,7 @@
 package fi.tuni.tamk.weatherapp
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class WeatherDataObject {
@@ -11,6 +12,8 @@ class WeatherDataObject {
     val sys: CountryInfo? = null
     val dt: Long? = null
     val timezone: Long? = null
+    val rain: CurrentRain? = null
+    val wind: CurrentWind? = null
 
     fun getLatitude(): Double? {
         return coord?.lat
@@ -26,6 +29,14 @@ class WeatherDataObject {
 
     fun getSunriseTime(): Int? {
         return sys?.sunrise
+    }
+
+    fun getRain(): Double? {
+        return rain?.oneHour
+    }
+
+    fun getWind(): Double? {
+        return wind?.speed
     }
 
     fun getSunsetTime(): Int? {
@@ -89,4 +100,15 @@ class CountryInfo {
     var country: String? = null
     var sunrise:Int? = null
     var sunset:Int? = null
+}
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class CurrentRain {
+    @JsonProperty("1h")
+    val oneHour:Double? = null
+}
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class CurrentWind {
+    var speed: Double? = null
 }
