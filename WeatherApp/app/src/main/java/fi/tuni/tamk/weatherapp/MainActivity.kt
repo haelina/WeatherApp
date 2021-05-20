@@ -188,8 +188,8 @@ class MainActivity : AppCompatActivity() {
         if(sunrise != null && sunset != null && timezone != null) {
             val sunriseDate = Date((sunrise + timezone - 10800) * 1000L)
             val sunsetDate = Date((sunset + timezone - 10800)* 1000L)
-            sunriseTime.text = "sunrise: ${getTimeFormatted(sunriseDate)}"
-            sunsetTime.text = "sunset: ${getTimeFormatted(sunsetDate)}"
+            sunriseTime.text = "${getTimeFormatted(sunriseDate)}"
+            sunsetTime.text = "${getTimeFormatted(sunsetDate)}"
         }
         Picasso.get().load("http://openweathermap.org/img/wn/${currentWeather.getIconCode()}@2x.png").resize(350, 350).into(weatherIcon);
         weatherData.isVisible = true
