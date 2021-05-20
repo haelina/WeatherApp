@@ -38,6 +38,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Search"
+                        android:textColor="@color/white"
+                        app:backgroundTint="#00BFD1"
                         android:layout_alignParentRight="true"
                         android:onClick="clickedSearch"/>
                 </RelativeLayout>
@@ -48,10 +50,12 @@
                     android:layout_marginHorizontal="10dp">
                     <Button
                         android:id="@+id/getCoordinatesButton"
-                        android:text="Current location weather"
+                        android:text="Get current location weather"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="getCoordinates"/>
+                        android:onClick="getCoordinates"
+                        app:backgroundTint="#00BFD1"
+                        android:textColor="@color/white"/>
                 </LinearLayout>
             </LinearLayout>
             <RelativeLayout
@@ -66,18 +70,22 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/weatherButton"
                     android:text="Current weather"
+                    android:textColor="@color/black"
                     android:insetBottom="0dp"
                     android:onClick="showWeather"
-                    android:background="@drawable/navbutton" />
+                    android:background="@drawable/navbutton"
+                    android:backgroundTint="#00BFD1"/>
                 <Button
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/forecastButton"
                     android:text="5 day Forecast"
+                    android:textColor="@color/white"
                     android:layout_alignParentRight="true"
                     android:insetBottom="0dp"
                     android:onClick="showForecast"
-                    android:background="@drawable/navbutton" />
+                    android:background="@drawable/navbutton"
+                    app:backgroundTint="#00BFD1"/>
             </RelativeLayout>
             <LinearLayout
                 android:id="@+id/forecastData"
@@ -265,7 +273,7 @@
                 android:visibility="gone"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="487dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/shape"
                 android:layout_marginBottom="30dp">
