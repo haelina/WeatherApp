@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var sunsetTime: TextView
     lateinit var weatherIcon: ImageView
     lateinit var dateTime: TextView
+    lateinit var rain: TextView
+    lateinit var wind: TextView
 
     lateinit var forecastName: TextView
 
@@ -92,6 +94,8 @@ class MainActivity : AppCompatActivity() {
         sunriseTime = findViewById(R.id.sunrise)
         sunsetTime = findViewById(R.id.sunset)
         dateTime = findViewById(R.id.dateTime)
+        rain = findViewById(R.id.rain)
+        wind = findViewById(R.id.wind)
 
         forecastName = findViewById(R.id.forecastCity)
 
@@ -176,6 +180,8 @@ class MainActivity : AppCompatActivity() {
         temperature.text = currentWeather.getTemperature().toString() + " \u2103"
         minMaxTemp.text = "min: " + currentWeather.getMinTemperature().toString() + " ℃ \t\t\tmax: " + currentWeather.getMaxTemperature().toString() + " ℃"
         feelsLike.text = "Feels like: " + currentWeather.getFeelsLikeTemperature().toString() + " ℃"
+        rain.text = if(currentWeather.getRain() != null) "Rain (in last 1h): " + currentWeather.getRain().toString() + " mm" else "Rain (in last 1h): 0.00 mm"
+        wind.text = "Wind speed: " + currentWeather.getWind().toString() + " m/s"
         val current = currentWeather.dt
         val timezone = currentWeather.timezone
         if (current != null && timezone != null) {
