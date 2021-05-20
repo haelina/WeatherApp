@@ -13,10 +13,13 @@ import java.nio.charset.StandardCharsets
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationManager
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -130,11 +133,17 @@ class MainActivity : AppCompatActivity() {
     fun showWeather(button: View) {
         forecastData.isVisible = false
         weatherData.isVisible = true
+        //ViewCompat.setBackgroundTintList(weatherButton, ContextCompat.getColorStateList(this, R.color.teal_700))
+        //weatherButton.setTextColor(Color.parseColor("#bdbdbd"))
+        weatherButton.setTextColor(Color.parseColor("#000000"))
+        forecastButton.setTextColor(Color.parseColor("#ffffff"))
     }
 
     fun showForecast(button: View) {
         forecastData.isVisible = true
         weatherData.isVisible = false
+        weatherButton.setTextColor(Color.parseColor("#ffffff"))
+        forecastButton.setTextColor(Color.parseColor("#000000"))
     }
 
     fun getWeather(searchValue: String) {
@@ -161,8 +170,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: FileNotFoundException) {
                 runOnUiThread() {
-                    weatherButton.isEnabled = false
-                    forecastButton.isEnabled = false
+                    disableNavButtons()
                     noResults.visibility = View.VISIBLE
                 }
             }
@@ -170,6 +178,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateUi() {
+        ViewCompat.setBackgroundTintList(weatherButton, ContextCompat.getColorStateList(this, R.color.dark_turquoise))
+        weatherButton.setTextColor(Color.parseColor("#000000"))
+        ViewCompat.setBackgroundTintList(forecastButton, ContextCompat.getColorStateList(this, R.color.dark_turquoise))
+        forecastButton.setTextColor(Color.parseColor("#ffffff"))
         weatherButton.isEnabled = true
         forecastButton.isEnabled = true
         cityName.text = currentWeather.name + ", " + currentWeather.getCountrycode()
@@ -200,6 +212,15 @@ class MainActivity : AppCompatActivity() {
         weatherData.isVisible = true
     }
 
+    fun disableNavButtons() {
+        weatherButton.isEnabled = false
+        forecastButton.isEnabled = false
+        ViewCompat.setBackgroundTintList(weatherButton, ContextCompat.getColorStateList(this, R.color.light_grey))
+        ViewCompat.setBackgroundTintList(forecastButton, ContextCompat.getColorStateList(this, R.color.light_grey))
+        weatherButton.setTextColor(Color.parseColor("#ffffff"))
+        forecastButton.setTextColor(Color.parseColor("#ffffff"))
+    }
+
     fun getWeatherWithCoordinates(lat: String, lon: String) {
         thread() {
             try {
@@ -223,8 +244,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: FileNotFoundException) {
                 runOnUiThread() {
-                    weatherButton.isEnabled = false
-                    forecastButton.isEnabled = false
+                    disableNavButtons()
                     noResults.isVisible = true
                 }
             }
@@ -260,6 +280,7 @@ class MainActivity : AppCompatActivity() {
 
             } catch (e: FileNotFoundException) {
                 runOnUiThread() {
+                    disableNavButtons()
                     noResults.isVisible = true
                 }
             }
@@ -294,9 +315,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: FileNotFoundException) {
                 runOnUiThread() {
-                    weatherButton.isEnabled = false
-                    weatherButton.alpha = 0.9f
-                    forecastButton.isEnabled = false
+                    disableNavButtons()
                     noResults.visibility = View.VISIBLE
                 }
             }
