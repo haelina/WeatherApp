@@ -84,7 +84,7 @@
                 android:visibility="gone"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="487dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/shape"
                 android:alpha="0.94"
