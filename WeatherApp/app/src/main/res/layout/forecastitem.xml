@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
-    app:cardBackgroundColor="#F1F1F1">
+    app:cardBackgroundColor="#bdbdbd">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
