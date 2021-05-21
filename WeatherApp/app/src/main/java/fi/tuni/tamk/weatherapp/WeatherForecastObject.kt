@@ -1,6 +1,5 @@
 package fi.tuni.tamk.weatherapp
 
-import android.os.Build
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -12,7 +11,6 @@ class WeatherForecastObject {
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Forecast3h {
     val dt:Long? = null
-    val dt_txt:String? = null
     val main:MainForecast? = null
     val weather: List<ForecastDescription>? = null
     val rain: Rain? = null

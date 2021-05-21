@@ -1,6 +1,5 @@
 package fi.tuni.tamk.weatherapp
 
-import android.text.TextUtils.substring
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +45,7 @@ class ForecastAdapter(val items: ArrayList<Forecast3h>, val itemTZ: Long): Recyc
             val localCurrent = forecastItem.dt + itemTZ - 10800
             holder.time.text = "${getForecastDateFormatted(Date(localCurrent * 1000L))}"
         }
-        //holder.time.text = "${forecastItem.dt_txt}"
+
         holder.forecastDescription.text = "${forecastItem.weather?.get(0)?.description?.substring(0, 1)?.toUpperCase() + forecastItem.weather?.get(0)?.description?.substring(1)}"
         if(forecastItem.rain?.threeHour == null) holder.forecastRain.text = "Rain: 0.00 mm" else holder.forecastRain.text = "Rain: ${forecastItem.rain.threeHour} mm"
 
