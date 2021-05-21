@@ -30,14 +30,14 @@
             <ImageView
                 android:id="@+id/forecastIcon"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/time"
                 android:paddingRight="5dp" />
             <TextView
                 android:id="@+id/temperature"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
                 android:textSize="20dp"
@@ -46,7 +46,7 @@
                 android:layout_toLeftOf="@+id/forecastIcon"/>
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="4"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="10dp">
