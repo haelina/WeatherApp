@@ -193,7 +193,7 @@ class MainActivity : AppCompatActivity() {
         cityName.text = currentWeather.name + ", " + currentWeather.getCountrycode()
         forecastName.text = currentWeather.name + ", " + currentWeather.getCountrycode()
         latitude.text = "latitude: " + currentWeather.getLatitude().toString()
-        longitude.text = "longitude " + currentWeather.getLongitude().toString()
+        longitude.text = "longitude: " + currentWeather.getLongitude().toString()
         description.text = currentWeather.getDescription()?.substring(0, 1)?.toUpperCase() + currentWeather.getDescription()?.substring(1)
         temperature.text = currentWeather.getTemperature().toString() + " \u2103"
         minMaxTemp.text = "min: " + currentWeather.getMinTemperature().toString() + " ℃ \t\t\tmax: " + currentWeather.getMaxTemperature().toString() + " ℃"
