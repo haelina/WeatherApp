@@ -167,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:text="26 \u2103"
                         android:textSize="42dp"
-                        android:textColor="#0A01FF"
+                        android:textColor="#27A9B3"
                         android:layout_toRightOf="@+id/weatherIcon"/>
                     <TextView
                         android:id="@+id/latValue"
