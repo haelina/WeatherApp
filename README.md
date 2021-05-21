@@ -38,4 +38,4 @@
 
 ## Screencast
 
-Youtube: [Go and watch the screencast](https://www.youtube.com/)
+**Youtube:** [Go and watch the screencast](https://www.youtube.com/)
