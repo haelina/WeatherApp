@@ -39,3 +39,8 @@
 ## Screencast
 
 **Youtube:** [Go and watch the screencast](https://www.youtube.com/)
+
+1. 0:00 UI Demonstration
+2. 0:00 Describe relevant parts of the code
+3. 0:00 Known bugs
+4. 0:00 Self-evaluation and what grade are you aiming at
