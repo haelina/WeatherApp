@@ -14,7 +14,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.location.Location
 import android.location.LocationManager
 import android.widget.*
@@ -43,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     // linear layout shown when result was not found
     lateinit var noResults: LinearLayout
 
+    // navigation buttons
     lateinit var weatherButton: Button
     lateinit var forecastButton: Button
 
@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var rain: TextView
     lateinit var wind: TextView
 
+    // cityname in forecast
     lateinit var forecastName: TextView
 
     // recyclerview for handling forecast items
@@ -108,8 +109,8 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-        getWeather("tampere")
-        getForecast("tampere")
+        // get weather and forecast for tampere by default
+        getAllData("tampere")
     }
 
     override fun onStop() {
@@ -118,28 +119,42 @@ class MainActivity : AppCompatActivity() {
         cancellationTokenSource.cancel()
     }
 
+    //
     fun clickedSearch(button: View) {
-        noResults.visibility = View.GONE
-        weatherData.visibility = View.GONE
-        forecastData.visibility = View.GONE
-        weatherButton.isEnabled = true
-        forecastButton.isEnabled = true
         Log.d("MainActivity", "Clicked search button")
-        getWeather(searchValue.text.toString())
-        getForecast(searchValue.text.toString())
-        cityName.text = searchValue.text.toString()
+        getAllData(searchValue.text.toString())
         searchValue.text.clear()
     }
 
-    fun showWeather(button: View) {
+    // get weather and forecast data with city or location name
+    fun getAllData(city: String) {
+        getWeather(city)
+        getForecast(city)
+    }
+
+    // Set weather data visible and hide other views
+    fun resetViews() {
+        noResults.visibility = View.GONE
+        weatherData.visibility = View.VISIBLE
+        forecastData.visibility = View.GONE
+    }
+
+    // Set "no results" view visible and disable navbuttons
+    fun showNoResults() {
+        noResults.isVisible = true
+        weatherData.isVisible = false
         forecastData.isVisible = false
-        weatherData.isVisible = true
-        //ViewCompat.setBackgroundTintList(weatherButton, ContextCompat.getColorStateList(this, R.color.teal_700))
-        //weatherButton.setTextColor(Color.parseColor("#bdbdbd"))
+        disableNavButtons()
+    }
+
+    // make weather data visible when weather button is clicked
+    fun showWeather(button: View) {
+        resetViews()
         weatherButton.setTextColor(Color.parseColor("#000000"))
         forecastButton.setTextColor(Color.parseColor("#ffffff"))
     }
 
+    // make forecast data visible when forecast button is clicked
     fun showForecast(button: View) {
         forecastData.isVisible = true
         weatherData.isVisible = false
@@ -147,6 +162,7 @@ class MainActivity : AppCompatActivity() {
         forecastButton.setTextColor(Color.parseColor("#000000"))
     }
 
+    // get weather values from openweathermap
     fun getWeather(searchValue: String) {
         Log.d("MainActivity", "Searching for $searchValue")
         thread() {
@@ -171,18 +187,23 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: FileNotFoundException) {
                 runOnUiThread() {
-                    disableNavButtons()
-                    noResults.visibility = View.VISIBLE
+                    showNoResults()
                 }
             }
         }
     }
 
-    fun updateUi() {
+    // set navigation button colors to look like enabled
+    fun resetNavButtons() {
         ViewCompat.setBackgroundTintList(weatherButton, ContextCompat.getColorStateList(this, R.color.dark_turquoise))
         weatherButton.setTextColor(Color.parseColor("#000000"))
         ViewCompat.setBackgroundTintList(forecastButton, ContextCompat.getColorStateList(this, R.color.dark_turquoise))
         forecastButton.setTextColor(Color.parseColor("#ffffff"))
+    }
+
+    // update weather condition values
+    fun updateUi() {
+        resetNavButtons()
         weatherButton.isEnabled = true
         forecastButton.isEnabled = true
         cityName.text = currentWeather.name + ", " + currentWeather.getCountrycode()
@@ -210,16 +231,17 @@ class MainActivity : AppCompatActivity() {
             sunsetTime.text = "${getTimeFormatted(sunsetDate)}"
         }
         Picasso.get().load("http://openweathermap.org/img/wn/${currentWeather.getIconCode()}@2x.png").resize(350, 350).into(weatherIcon);
-        weatherData.isVisible = true
+        resetViews()
     }
 
+    // set buttons disabled and set button backgound and text colors
     fun disableNavButtons() {
         weatherButton.isEnabled = false
         forecastButton.isEnabled = false
-        ViewCompat.setBackgroundTintList(weatherButton, ContextCompat.getColorStateList(this, R.color.light_grey))
-        ViewCompat.setBackgroundTintList(forecastButton, ContextCompat.getColorStateList(this, R.color.light_grey))
-        weatherButton.setTextColor(Color.parseColor("#ffffff"))
-        forecastButton.setTextColor(Color.parseColor("#ffffff"))
+        ViewCompat.setBackgroundTintList(weatherButton, ContextCompat.getColorStateList(this, R.color.grey))
+        ViewCompat.setBackgroundTintList(forecastButton, ContextCompat.getColorStateList(this, R.color.grey))
+        weatherButton.setTextColor(Color.parseColor("#e0e0e0"))
+        forecastButton.setTextColor(Color.parseColor("#e0e0e0"))
     }
 
     fun getWeatherWithCoordinates(lat: String, lon: String) {
@@ -245,8 +267,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: FileNotFoundException) {
                 runOnUiThread() {
-                    disableNavButtons()
-                    noResults.isVisible = true
+                    showNoResults()
                 }
             }
         }
@@ -274,8 +295,8 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread() {
                     if(currentForecast.list != null && currentWeather.timezone != null) {
                         recycler_view.adapter = ForecastAdapter(currentForecast.list!!, currentWeather.timezone!!)
-                        weatherButton.isEnabled = true
-                        forecastButton.isEnabled = true
+                        //weatherButton.isEnabled = true
+                        //forecastButton.isEnabled = true
                     }
                 }
 
@@ -348,12 +369,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun hideLayouts() {
-        noResults.isVisible = false
-        weatherData.isVisible = false
-        forecastData.isVisible = false
-    }
-
     @SuppressLint("MissingPermission")
     fun getCoordinates(button: View) {
         Log.d("MainActivity", "Finding coordinates")
@@ -364,9 +379,9 @@ class MainActivity : AppCompatActivity() {
                 currentLocTask.addOnCompleteListener {
                     if (it.isSuccessful && it.result != null) {
                         val location: Location = it.result
-                        Log.d("MainActivity", "thread is ${Thread.currentThread().name}")
+                        //Log.d("MainActivity", "thread is ${Thread.currentThread().name}")
                         Log.d("MainActivity", "lat:${location.latitude} lon:${location.longitude}")
-                        hideLayouts()
+                        //hideLayouts()
                         getWeatherWithCoordinates(location.latitude.toString(), location.longitude.toString())
                         getForecastWithCoordinates(location.latitude.toString(), location.longitude.toString())
                     }
@@ -379,6 +394,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // check if location service is enabled in phone
     fun isLocationEnabled(): Boolean {
         var locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
