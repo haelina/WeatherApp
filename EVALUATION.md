@@ -10,7 +10,7 @@
 | ------------------------ | --------------- |
 | Motorola moto g(8) power | 11              |
 
-## Usability and technical features
+### Usability and technical features
 
 **Technical features**
 |Current location|Given location|
@@ -36,18 +36,18 @@
 
 # Code
 
-## README.md
+### README.md
 
 The README.md is clear in a way that it is easy to read and follow. It includes all that was required.
 
-## Comments in code
+### Comments in code
 
 The code was commented in the most perfect way. There were comments to ease the following of the code, but not too much to make it cumbersome.
 
-## Clarity of code
+### Clarity of code
 
 The code itself was written in such a descriptive manner that it made the following of the code easy enough even if there had not been any comments.
 
-## Reflecting to project requirements
+### Reflecting to project requirements
 
 In my opinion this application meets the requirements of grade four. The only things I see that hold it a bit down (and thus, not reaching five) are the orientation locking to vertical and darkmode not applicable. The usability otherwise is great, documentation whether regarding README.md or the code itself, is impeccable and the app uses both RESTful API and device API.
