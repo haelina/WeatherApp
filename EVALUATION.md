@@ -50,4 +50,4 @@ The code itself was written in such a descriptive manner that it made the follow
 
 ### Reflecting to project requirements
 
-In my opinion this application meets the requirements of grade four. The only things I see that hold it a bit down (and thus, not reaching five) are the orientation locking to vertical and darkmode not applicable. The usability otherwise is great, documentation whether regarding README.md or the code itself, is impeccable and the app uses both RESTful API and device API.
+In my opinion this application meets the requirements of grade four. The only things I see that hold it a bit down (and thus, not reaching five) are the orientation locking to vertical and darkmode not applicable. The usability otherwise is great, documentation whether regarding README.md or the code itself, is impeccable and the app uses both RESTful API and device API. There is also a screencast of the application's user interface as well as the code and the screencast also holds all the required bits, and is under the given time limit.
