@@ -1,8 +1,8 @@
 # EVALUATION
 
-| Evaluator     | Evaluatee      |
-| ------------- | -------------- |
-| Terhi Salonen | Hanna Sepänmaa |
+| Evaluator     | Evaluatee      |Grade|
+| ------------- | -------------- |-----|
+| Terhi Salonen | Hanna Sepänmaa |4|
 
 # Application on device
 
