@@ -1,4 +1,7 @@
 # WeatherApp
+<p align="middle">
+<img src="/app3.jpg" width="200" height="auto">         <img src="/app1.jpg" width="200" height="auto">
+</p>
 
 **Name:** Hanna Sepänmaa
 
